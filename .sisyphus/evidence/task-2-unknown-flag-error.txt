@@ -1,0 +1,7 @@
+=== SCENARIO 10: Unknown flag error ===
+$ node dist/index.js --foo 2>&1; echo 'EXIT:$?'
+Error: Unknown option: --foo
+Run "omos --help" for usage.
+EXIT:1
+
+PASS: contains 'Unknown option', EXIT:1

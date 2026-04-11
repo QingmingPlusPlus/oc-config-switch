@@ -1,0 +1,10 @@
+=== SCENARIO 9: Missing config dir clear error ===
+$ mv ~/.config/opencode ~/.config/opencode.bak
+$ node dist/index.js on 2>&1; echo 'EXIT:$?'
+Error: Config directory not found: /Users/qmpp/.config/opencode
+Run "omos --help" for usage.
+EXIT:1
+$ mv ~/.config/opencode.bak ~/.config/opencode
+Restored
+
+PASS: contains 'Config directory not found', EXIT:1

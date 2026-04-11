@@ -1,0 +1,41 @@
+{
+  "active_plan": "/Users/qmpp/Workspace/omo-switch/.sisyphus/plans/omo-switch-cli.md",
+  "started_at": "2026-04-11T13:31:08.208Z",
+  "session_ids": [
+    "ses_2835c71fcffeSYhUuaipFrkit1",
+    "ses_2835c71fcffeSYhUuaipFrkit1",
+    "ses_28334cdcaffe4HTOBbctcwlQzY",
+    "ses_28334a636ffeqGq8SV2Zrc8NKn",
+    "ses_2833471efffeIR5htEeu6I6Gqk",
+    "ses_283344897ffeejROGhzftJAe1A"
+  ],
+  "session_origins": {
+    "ses_2835c71fcffeSYhUuaipFrkit1": "direct",
+    "ses_28334cdcaffe4HTOBbctcwlQzY": "appended",
+    "ses_28334a636ffeqGq8SV2Zrc8NKn": "appended",
+    "ses_2833471efffeIR5htEeu6I6Gqk": "appended",
+    "ses_283344897ffeejROGhzftJAe1A": "appended"
+  },
+  "plan_name": "omo-switch-cli",
+  "agent": "atlas",
+  "task_sessions": {
+    "todo:1": {
+      "task_key": "todo:1",
+      "task_label": "1",
+      "task_title": "Update package.json for omos CLI",
+      "session_id": "ses_28341e5f0ffeNVEnjyjirWZqt2",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-11T13:33:01.976Z"
+    },
+    "final-wave:f1": {
+      "task_key": "final-wave:f1",
+      "task_label": "F1",
+      "task_title": "**Plan Compliance Audit** — `oracle`",
+      "session_id": "ses_28330f41fffeNpiPBmlxRLBJyH",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-11T13:51:33.481Z"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+=== SCENARIO 8: Missing source file clear error ===
+$ rm -f ~/.config/opencode/omo-switch.on.opencode.json
+$ node dist/index.js on 2>&1; echo 'EXIT:$?'
+Error: Config file not found: /Users/qmpp/.config/opencode/omo-switch.on.opencode.json
+Run "omos --help" for usage.
+EXIT:1
+$ Restoring...
+Restored
+
+PASS: contains 'Config file not found', 'omo-switch.on.opencode.json', EXIT:1

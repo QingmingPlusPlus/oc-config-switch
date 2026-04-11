@@ -1,0 +1,5 @@
+=== SCENARIO 7: --version flag ===
+$ node dist/index.js --version
+1.0.0
+
+PASS: stdout is '1.0.0'

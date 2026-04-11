@@ -1,0 +1,20 @@
+=== SCENARIO 5: No arguments shows help ===
+$ node dist/index.js
+omos — opencode config switcher
+
+Usage:
+  omos <mode>
+
+Modes:
+  on     Switch to "on" configuration
+  off    Switch to "off" configuration
+
+Options:
+  -v, --version   Print version
+  -h, --help      Show this help message
+
+Config directory: ~/.config/opencode/
+Source files:     omo-switch.<mode>.opencode.json
+Target file:      opencode.json
+
+PASS: stdout contains 'omos', 'Usage', 'on', 'off'

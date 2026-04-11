@@ -1,0 +1,8 @@
+=== SCENARIO 3: Overwrite silently ===
+$ echo {"old":"data"} > ~/.config/opencode/opencode.json
+$ node dist/index.js on
+Switched to mode: on
+$ cat ~/.config/opencode/opencode.json
+{"model":"gpt-4","enabled":true}
+
+PASS: Overwrote old data silently, no warnings, content is gpt-4 config

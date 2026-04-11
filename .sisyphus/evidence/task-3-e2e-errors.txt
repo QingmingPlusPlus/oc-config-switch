@@ -1,0 +1,5 @@
+omos foo → Error: Unknown mode: "foo". Supported modes: on, off / EXIT:1 ✓
+omos (no args) → help text / EXIT:0 ✓
+omos --help → help text with "omos <mode>" ✓
+omos --version → 1.0.0 / EXIT:0 ✓
+missing source file → Error: Config file not found: ...omo-switch.on.opencode.json / EXIT:1 ✓

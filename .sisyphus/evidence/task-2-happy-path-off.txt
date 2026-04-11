@@ -1,0 +1,7 @@
+=== SCENARIO 2: Happy path off ===
+$ node dist/index.js off
+Switched to mode: off
+$ cat ~/.config/opencode/opencode.json
+{"model":"none","enabled":false}
+
+PASS: stdout='Switched to mode: off', content is {model:none,enabled:false}

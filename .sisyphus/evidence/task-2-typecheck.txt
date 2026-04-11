@@ -1,0 +1,9 @@
+=== SCENARIO 11: Typecheck ===
+$ npm run typecheck
+
+> omo-switch@1.0.0 typecheck
+> tsc --noEmit
+
+EXIT:0
+
+PASS: exit code 0

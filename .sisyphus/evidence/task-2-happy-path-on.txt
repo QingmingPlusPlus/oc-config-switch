@@ -1,0 +1,10 @@
+=== SCENARIO 1: Happy path on ===
+$ node dist/index.js on
+Switched to mode: on
+$ cat ~/.config/opencode/opencode.json
+{"model":"gpt-4","enabled":true}
+
+$ ls ~/.config/opencode/omo-switch.on.opencode.json
+/Users/qmpp/.config/opencode/omo-switch.on.opencode.json
+
+PASS: stdout='Switched to mode: on', content matches, source file still exists

@@ -1,0 +1,7 @@
+=== SCENARIO 4: Unknown mode error ===
+$ node dist/index.js foo 2>&1; echo 'EXIT:$?'
+Error: Unknown mode: "foo". Supported modes: on, off
+Run "omos --help" for usage.
+EXIT:1
+
+PASS: contains 'Unknown mode', 'on, off', EXIT:1

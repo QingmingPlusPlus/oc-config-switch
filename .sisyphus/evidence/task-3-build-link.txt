@@ -1,0 +1,5 @@
+BUILD: npm run build → exit 0
+dist/ contains: index.js, cli.js, switcher.js (+ .d.ts, .js.map)
+npm link → exit 0
+which omos → /opt/homebrew/bin/omos
+omos --version → 1.0.0

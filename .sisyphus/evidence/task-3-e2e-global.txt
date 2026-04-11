@@ -1,0 +1,3 @@
+omos on → "Switched to mode: on", opencode.json = {"test":"on-mode"} ✓
+omos off → "Switched to mode: off", opencode.json = {"test":"off-mode"} ✓
+Source files preserved after copy ✓

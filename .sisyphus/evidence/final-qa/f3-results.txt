@@ -1,0 +1,223 @@
+Scenarios [12/12 pass]:
+  ✓ Scenario 1: omos on happy path
+  ✓ Scenario 2: omos off happy path
+  ✓ Scenario 3: Silent overwrite
+  ✓ Scenario 4: Unknown mode error
+  ✓ Scenario 5: Unknown mode 'status' (scope check)
+  ✓ Scenario 6: No arguments
+  ✓ Scenario 7: --help
+  ✓ Scenario 8: --version
+  ✓ Scenario 9: Unknown flag
+  ✓ Scenario 10: Missing source file
+  ✓ Scenario 11: Missing config directory
+  ✓ Scenario 12: Source file preserved after copy
+
+Integration: PASS
+Edge Cases: 9 tested
+
+VERDICT: APPROVE
+
+Preconditions:
+  which omos: PASS
+  omos --version: PASS
+
+# F3 Real Manual QA Evidence
+
+Workspace: /Users/qmpp/Workspace/omo-switch
+Timestamp: 2026-04-11 21:49:05 +0800
+
+## Precondition: which omos
+$ which omos
+EXIT: 0
+STDOUT:
+/opt/homebrew/bin/omos
+
+STDERR:
+<empty>
+
+## Precondition: omos --version
+$ omos --version
+EXIT: 0
+STDOUT:
+1.0.0
+
+STDERR:
+<empty>
+
+## Fixture setup
+Created /Users/qmpp/.config/opencode/omo-switch.on.opencode.json
+Created /Users/qmpp/.config/opencode/omo-switch.off.opencode.json
+
+## Scenario 1: omos on happy path
+$ omos on
+EXIT: 0
+STDOUT:
+Switched to mode: on
+
+STDERR:
+<empty>
+
+Observed target config:
+{"profile":"on","provider":"anthropic"}
+
+Source file preserved: True
+
+## Scenario 2: omos off happy path
+$ omos off
+EXIT: 0
+STDOUT:
+Switched to mode: off
+
+STDERR:
+<empty>
+
+Observed target config:
+{"profile":"off","provider":"none"}
+
+## Scenario 3: Silent overwrite
+$ echo ... > opencode.json; omos on
+EXIT: 0
+STDOUT:
+Switched to mode: on
+
+STDERR:
+<empty>
+
+Observed overwritten config:
+{"profile":"on","provider":"anthropic"}
+
+## Scenario 4: Unknown mode error
+$ omos foo 2>&1; echo "EXIT:$?"
+EXIT: 0
+STDOUT:
+Error: Unknown mode: "foo". Supported modes: on, off
+Run "omos --help" for usage.
+EXIT:1
+
+STDERR:
+<empty>
+
+## Scenario 5: Unknown mode status scope check
+$ omos status 2>&1; echo "EXIT:$?"
+EXIT: 0
+STDOUT:
+Error: Unknown mode: "status". Supported modes: on, off
+Run "omos --help" for usage.
+EXIT:1
+
+STDERR:
+<empty>
+
+## Scenario 6: No arguments
+$ omos
+EXIT: 0
+STDOUT:
+omos — opencode config switcher
+
+Usage:
+  omos <mode>
+
+Modes:
+  on     Switch to "on" configuration
+  off    Switch to "off" configuration
+
+Options:
+  -v, --version   Print version
+  -h, --help      Show this help message
+
+Config directory: ~/.config/opencode/
+Source files:     omo-switch.<mode>.opencode.json
+Target file:      opencode.json
+
+STDERR:
+<empty>
+
+## Scenario 7: --help
+$ omos --help
+EXIT: 0
+STDOUT:
+omos — opencode config switcher
+
+Usage:
+  omos <mode>
+
+Modes:
+  on     Switch to "on" configuration
+  off    Switch to "off" configuration
+
+Options:
+  -v, --version   Print version
+  -h, --help      Show this help message
+
+Config directory: ~/.config/opencode/
+Source files:     omo-switch.<mode>.opencode.json
+Target file:      opencode.json
+
+STDERR:
+<empty>
+
+## Scenario 8: --version
+$ omos --version
+EXIT: 0
+STDOUT:
+1.0.0
+
+STDERR:
+<empty>
+
+## Scenario 9: Unknown flag
+$ omos --foo 2>&1; echo "EXIT:$?"
+EXIT: 0
+STDOUT:
+Error: Unknown option: --foo
+Run "omos --help" for usage.
+EXIT:1
+
+STDERR:
+<empty>
+
+## Scenario 10: Missing source file
+$ rm fixture_on; omos on 2>&1; echo "EXIT:$?"
+EXIT: 0
+STDOUT:
+Error: Config file not found: /Users/qmpp/.config/opencode/omo-switch.on.opencode.json
+Run "omos --help" for usage.
+EXIT:1
+
+STDERR:
+<empty>
+
+## Scenario 11: Missing config directory
+$ mv opencode aside; omos on 2>&1; echo "EXIT:$?"
+EXIT: 0
+STDOUT:
+Error: Config directory not found: /Users/qmpp/.config/opencode
+Run "omos --help" for usage.
+EXIT:1
+
+STDERR:
+<empty>
+
+## Scenario 12a: Re-run omos on
+$ omos on
+EXIT: 0
+STDOUT:
+Switched to mode: on
+
+STDERR:
+<empty>
+
+## Scenario 12b: List config directory
+$ ls -la /Users/qmpp/.config/opencode
+EXIT: 0
+STDOUT:
+total 24
+drwxr-xr-x@  5 qmpp  staff  160 Apr 11 21:49 .
+drwx------@ 16 qmpp  staff  512 Apr 11 21:49 ..
+-rw-r--r--@  1 qmpp  staff   36 Apr 11 21:49 omo-switch.off.opencode.json
+-rw-r--r--@  1 qmpp  staff   40 Apr 11 21:49 omo-switch.on.opencode.json
+-rw-r--r--@  1 qmpp  staff   40 Apr 11 21:49 opencode.json
+
+STDERR:
+<empty>
+
