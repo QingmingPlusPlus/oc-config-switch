@@ -1,10 +1,10 @@
 {
   "name": "omo-switch",
   "version": "1.0.0",
-  "description": "A TypeScript command-line application.",
+  "description": "CLI tool to quickly switch opencode configuration files",
   "type": "module",
   "bin": {
-    "omo-switch": "./dist/index.js"
+    "omos": "./dist/index.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
