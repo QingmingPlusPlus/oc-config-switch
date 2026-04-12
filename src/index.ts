@@ -13,8 +13,11 @@ function main(args: string[]): void {
       printVersion();
       break;
     case 'switch':
-      switchMode(command.mode);
-      console.log(`Switched to mode: ${command.mode}`);
+      const result = switchMode(command.mode);
+      console.log(`Switched to mode: ${result.mode}`);
+      console.log(`OPENCODE_CONFIG_DIR=${result.configDir}`);
+      console.log(`Updated shell config: ${result.shellConfigPath}`);
+      console.log('Run "source ~/.zshrc" or open a new terminal to apply it.');
       break;
   }
 }

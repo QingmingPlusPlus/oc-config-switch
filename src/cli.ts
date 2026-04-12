@@ -29,16 +29,16 @@ Usage:
   omos <mode>
 
 Modes:
-  on     Switch to "on" configuration
-  off    Switch to "off" configuration
+  <mode>   Folder name under baseDir, or an alias from config.json
 
 Options:
   -v, --version   Print version
   -h, --help      Show this help message
 
-Config directory: ~/.config/opencode/
-Source files:     omo-switch.<mode>.opencode.json
-Target file:      opencode.json`);
+Config file:      config.json next to the package root
+baseDir:          Supports absolute paths and ~/ paths
+Effect:           Writes OPENCODE_CONFIG_DIR to ~/.zshrc
+Apply changes:    Run "source ~/.zshrc" or open a new terminal`);
 }
 
 export function printVersion(): void {

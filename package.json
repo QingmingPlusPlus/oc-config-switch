@@ -21,7 +21,8 @@
     "node": ">=20"
   },
   "files": [
-    "dist"
+    "dist",
+    "config.json"
   ],
   "devDependencies": {
     "@types/node": "^22.14.0",

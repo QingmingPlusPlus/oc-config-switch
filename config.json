@@ -1,0 +1,7 @@
+{
+  "baseDir": "~/opencode-config",
+  "aliases": {
+    "on": "omo.copilot",
+    "off": "pure"
+  }
+}
