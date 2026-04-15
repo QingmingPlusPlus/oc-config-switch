@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { basename, dirname, isAbsolute, join, relative, resolve } from 'node:path';
@@ -11,13 +12,15 @@ type SwitchConfig = {
 export type SwitchResult = {
   mode: string;
   configDir: string;
-  shellConfigPath: string;
+  updateTarget: string;
+  applyHint: string;
 };
 
 type SwitchOptions = {
   configPath?: string;
   homeDir?: string;
   shellConfigPath?: string;
+  platform?: NodeJS.Platform;
   moduleUrl?: string;
 };
 
@@ -27,9 +30,9 @@ const SHELL_BLOCK_END = '# omo-switch end';
 
 export function switchMode(mode: string, options: SwitchOptions = {}): SwitchResult {
   const homeDir = options.homeDir ?? homedir();
+  const platform = options.platform ?? process.platform;
   const projectRoot = resolveProjectRoot(options.moduleUrl);
   const configPath = options.configPath ?? join(projectRoot, CONFIG_FILE_NAME);
-  const shellConfigPath = options.shellConfigPath ?? join(homeDir, '.zshrc');
   const config = readSwitchConfig(configPath);
   const baseDir = expandHomePath(config.baseDir, homeDir);
 
@@ -45,8 +48,24 @@ export function switchMode(mode: string, options: SwitchOptions = {}): SwitchRes
   assertInsideBaseDir(configDir, resolvedBaseDir);
   assertUsableConfigDir(configDir);
 
+  if (platform === 'win32') {
+    persistWindowsUserEnvironment(configDir);
+    return {
+      mode,
+      configDir,
+      updateTarget: 'Windows user environment variable OPENCODE_CONFIG_DIR',
+      applyHint: 'Open a new terminal window to apply it.',
+    };
+  }
+
+  const shellConfigPath = options.shellConfigPath ?? join(homeDir, '.zshrc');
   writeShellConfig(shellConfigPath, configDir);
-  return { mode, configDir, shellConfigPath };
+  return {
+    mode,
+    configDir,
+    updateTarget: shellConfigPath,
+    applyHint: 'Run "source ~/.zshrc" or open a new terminal to apply it.',
+  };
 }
 
 export function resolveProjectRoot(moduleUrl = import.meta.url): string {
@@ -62,7 +81,7 @@ export function expandHomePath(pathValue: string, homeDir = homedir()): string {
   if (pathValue === '~') {
     return homeDir;
   }
-  if (pathValue.startsWith('~/')) {
+  if (pathValue.startsWith('~/') || pathValue.startsWith('~\\')) {
     return join(homeDir, pathValue.slice(2));
   }
   if (pathValue.startsWith('~')) {
@@ -115,6 +134,15 @@ function writeShellConfig(shellConfigPath: string, configDir: string): void {
   const currentContent = existsSync(shellConfigPath) ? readFileSync(shellConfigPath, 'utf8') : '';
   const nextContent = updateShellConfigContent(currentContent, configDir);
   writeFileSync(shellConfigPath, nextContent, 'utf8');
+}
+
+function persistWindowsUserEnvironment(configDir: string): void {
+  try {
+    execFileSync('setx', ['OPENCODE_CONFIG_DIR', configDir], { stdio: 'ignore' });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Failed to update Windows user environment: ${message}`);
+  }
 }
 
 function updateShellConfigContent(content: string, configDir: string): string {

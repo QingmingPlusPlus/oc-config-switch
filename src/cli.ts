@@ -23,7 +23,7 @@ export function parseCommand(args: string[]): Command {
 }
 
 export function printHelp(): void {
-  console.log(`omos — opencode config switcher
+  console.log(`omos - opencode config switcher
 
 Usage:
   omos <mode>
@@ -37,8 +37,8 @@ Options:
 
 Config file:      config.json next to the package root
 baseDir:          Supports absolute paths and ~/ paths
-Effect:           Writes OPENCODE_CONFIG_DIR to ~/.zshrc
-Apply changes:    Run "source ~/.zshrc" or open a new terminal`);
+Effect:           macOS/Linux writes ~/.zshrc; Windows sets a user env var
+Apply changes:    Open a new terminal (or run source ~/.zshrc on macOS/Linux)`);
 }
 
 export function printVersion(): void {

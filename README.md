@@ -2,8 +2,9 @@
 
 `omo-switch` is a small CLI for switching opencode config directories.
 
-It writes an `OPENCODE_CONFIG_DIR` export block to `~/.zshrc` instead of copying
-or overwriting `opencode.json`.
+It updates `OPENCODE_CONFIG_DIR` for your OS:
+- macOS/Linux: writes an export block to `~/.zshrc`
+- Windows: sets a user environment variable with `setx`
 
 ## Configuration
 
@@ -31,11 +32,10 @@ omos pure
 omos omo.copilot
 omos on
 omos off
-source ~/.zshrc
 ```
 
-Open a new terminal instead of running `source ~/.zshrc` if you prefer a clean
-shell session.
+On macOS/Linux, you can run `source ~/.zshrc` to apply immediately.
+On every platform, opening a new terminal session will apply the change.
 
 ## Development
 
