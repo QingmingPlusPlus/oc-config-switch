@@ -22,7 +22,7 @@ function main(args: string[]): void {
     }
     case 'off': {
       const result = clearMode();
-      console.log('Cleared OPENCODE_CONFIG_DIR written by omo-switch.');
+      console.log('Cleared OPENCODE_CONFIG_DIR written by oc-config-switch.');
       console.log(`Updated target: ${result.updateTarget}`);
       console.log(result.applyHint);
       break;
@@ -35,7 +35,7 @@ function main(args: string[]): void {
         break;
       }
       if (result.mode === null) {
-        console.log('Current OPENCODE_CONFIG_DIR is not managed by omo-switch.');
+        console.log('Current OPENCODE_CONFIG_DIR is not managed by oc-config-switch.');
         console.log(`OPENCODE_CONFIG_DIR=${result.configDir}`);
         console.log(`Checked target: ${result.updateTarget}`);
         break;
@@ -76,6 +76,6 @@ try {
 } catch (error) {
   const message = error instanceof Error ? error.message : String(error);
   console.error(`Error: ${message}`);
-  console.error('Run "omos help" for usage.');
+  console.error('Run "ocs help" for usage.');
   process.exitCode = 1;
 }

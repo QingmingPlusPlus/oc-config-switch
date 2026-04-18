@@ -6,17 +6,17 @@
 
 ## OVERVIEW
 
-`omo-switch` — CLI tool (invoked as `omos`) that switches opencode config by copying preset JSON files into `~/.config/opencode/opencode.json`. Pure Node.js, zero runtime deps.
+`oc-config-switch` — CLI tool (invoked as `ocs`) that switches opencode config by copying preset JSON files into `~/.config/opencode/opencode.json`. Pure Node.js, zero runtime deps.
 
 ## STRUCTURE
 
 ```
-omo-switch/
+oc-config-switch/
 ├── src/
 │   ├── index.ts       # Entry point — shebang, main(), top-level try/catch
 │   ├── cli.ts         # Arg parsing — Command discriminated union, help, version
 │   └── switcher.ts    # Core logic — mode validation, file copy
-├── package.json       # bin: "omos", type: "module"
+├── package.json       # bin: "ocs", type: "module"
 └── tsconfig.json      # ES2022 + NodeNext
 ```
 
@@ -55,7 +55,7 @@ omo-switch/
 ## ANTI-PATTERNS (THIS PROJECT)
 
 - External runtime dependencies — stdlib only
-- Dynamic mode discovery (scanning directory for `omo-switch.*.opencode.json`)
+- Dynamic mode discovery (scanning directory for `oc-config-switch.*.opencode.json`)
 - JSON content validation — copy as-is
 - Colored output, progress indicators, interactive prompts
 - Interfaces / abstract classes — concrete implementations only
@@ -71,14 +71,14 @@ omo-switch/
 npm run build        # tsc → dist/
 npm run typecheck    # tsc --noEmit
 npm run dev          # tsx src/index.ts (dev mode)
-npm link             # Install globally as "omos"
-omos on              # Copy omo-switch.on.opencode.json → opencode.json
-omos off             # Copy omo-switch.off.opencode.json → opencode.json
+npm link             # Install globally as "ocs"
+ocs on               # Copy oc-config-switch.on.opencode.json → opencode.json
+ocs off              # Copy oc-config-switch.off.opencode.json → opencode.json
 ```
 
 ## NOTES
 
-- Source config files must pre-exist at `~/.config/opencode/omo-switch.{mode}.opencode.json` — tool does not create them
-- `omos` silently overwrites existing `opencode.json` — no confirmation, no backup
+- Source config files must pre-exist at `~/.config/opencode/oc-config-switch.{mode}.opencode.json` — tool does not create them
+- `ocs` silently overwrites existing `opencode.json` — no confirmation, no backup
 - No unit tests by design (V1 decision) — QA via manual CLI smoke tests
 - `tsc` does NOT rewrite import extensions — `.js` suffix in TS source is mandatory for ESM

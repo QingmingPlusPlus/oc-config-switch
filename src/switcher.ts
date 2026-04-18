@@ -38,8 +38,8 @@ type SwitchOptions = {
 };
 
 const CONFIG_FILE_NAME = 'config.json';
-const SHELL_BLOCK_START = '# omo-switch begin';
-const SHELL_BLOCK_END = '# omo-switch end';
+const SHELL_BLOCK_START = '# oc-config-switch begin';
+const SHELL_BLOCK_END = '# oc-config-switch end';
 
 export function switchMode(mode: string, options: SwitchOptions = {}): EnvironmentUpdateResult {
   const context = resolveSwitchContext(options);

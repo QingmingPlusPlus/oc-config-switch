@@ -8,7 +8,7 @@ export type Command =
   | { type: 'help' }
   | { type: 'version' };
 
-export const VERSION = '2.1.0';
+export const VERSION = '3.0.0';
 
 export function parseCommand(args: string[]): Command {
   if (args.length === 0) {
@@ -31,31 +31,31 @@ export function parseCommand(args: string[]): Command {
   if (command === 'on' || command === 'new' || command === 'remove') {
     const mode = args[1];
     if (mode === undefined) {
-      throw new Error(`Missing mode. Usage: omos ${command} <mode>`);
+      throw new Error(`Missing mode. Usage: ocs ${command} <mode>`);
     }
     if (args.length > 2) {
-      throw new Error(`Too many arguments. Usage: omos ${command} <mode>`);
+      throw new Error(`Too many arguments. Usage: ocs ${command} <mode>`);
     }
     return { type: command, mode };
   }
   if (command.startsWith('-')) {
     throw new Error(`Unknown option: ${command}`);
   }
-  throw new Error(`Unknown command: ${command}. Use "omos on ${command}" to switch to a mode.`);
+  throw new Error(`Unknown command: ${command}. Use "ocs on ${command}" to switch to a mode.`);
 }
 
 export function printHelp(): void {
-  console.log(`omos - opencode environment switcher
+  console.log(`ocs - opencode environment switcher
 
 Usage:
-  omos on <mode>       Switch OPENCODE_CONFIG_DIR to an environment
-  omos off             Clear OPENCODE_CONFIG_DIR written by omo-switch
-  omos current         Print the current environment
-  omos list            List all environments
-  omos new <mode>      Create an empty environment directory
-  omos remove <mode>   Remove an environment directory
-  omos version         Print version
-  omos help            Show this help message
+  ocs on <mode>        Switch OPENCODE_CONFIG_DIR to an environment
+  ocs off              Clear OPENCODE_CONFIG_DIR written by oc-config-switch
+  ocs current          Print the current environment
+  ocs list             List all environments
+  ocs new <mode>       Create an empty environment directory
+  ocs remove <mode>    Remove an environment directory
+  ocs version          Print version
+  ocs help             Show this help message
 
 Options:
   -v, --version        Print version

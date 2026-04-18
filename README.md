@@ -1,6 +1,6 @@
-# omo-switch
+# oc-config-switch
 
-`omo-switch` is a small CLI for managing opencode environment directories.
+`oc-config-switch` is a small CLI for managing opencode environment directories.
 
 It updates `OPENCODE_CONFIG_DIR` for your OS:
 - macOS/Linux: writes an export block to `~/.zshrc`
@@ -28,20 +28,20 @@ direct child folder under `baseDir`.
 ## Usage
 
 ```sh
-omos new demo
-omos list
-omos on demo
-omos current
-omos off
-omos remove demo
-omos version
-omos help
+ocs new demo
+ocs list
+ocs on demo
+ocs current
+ocs off
+ocs remove demo
+ocs version
+ocs help
 ```
 
-`omos new <mode>` creates an empty environment directory. `omos on <mode>`
-points `OPENCODE_CONFIG_DIR` at that directory. `omos current` prints the
-environment currently written by omo-switch. `omos off` removes the environment
-variable written by omo-switch.
+`ocs new <mode>` creates an empty environment directory. `ocs on <mode>`
+points `OPENCODE_CONFIG_DIR` at that directory. `ocs current` prints the
+environment currently written by oc-config-switch. `ocs off` removes the environment
+variable written by oc-config-switch.
 
 On macOS/Linux, you can run `source ~/.zshrc` to apply immediately.
 On every platform, opening a new terminal session will apply the change.
