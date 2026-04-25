@@ -51,8 +51,10 @@ function main(args: string[]): void {
         console.log('No environments found.');
         break;
       }
+      const current = currentMode();
       for (const mode of modes) {
-        console.log(mode);
+        const marker = current.mode === mode ? '(*)' : '( )';
+        console.log(`${marker} ${mode}`);
       }
       break;
     }

@@ -51,7 +51,7 @@ Usage:
   ocs on <mode>        Switch OPENCODE_CONFIG_DIR to an environment
   ocs off              Clear OPENCODE_CONFIG_DIR written by oc-config-switch
   ocs current          Print the current environment
-  ocs list             List all environments
+  ocs list             List all environments ( (*) = active, ( ) = inactive )
   ocs new <mode>       Create an empty environment directory
   ocs remove <mode>    Remove an environment directory
   ocs version          Print version
