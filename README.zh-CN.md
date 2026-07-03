@@ -96,6 +96,18 @@ ocs list
 ocs remove work
 ```
 
+临时用某个环境启动一次 opencode（不持久化）：
+
+```sh
+ocs run work
+```
+
+mode 之后的多余参数会透传给 opencode：
+
+```sh
+ocs run work --resume
+```
+
 ## 命令
 
 | 命令 | 说明 |
@@ -106,6 +118,7 @@ ocs remove work
 | `ocs list` | 列出 `baseDir` 下的所有环境 |
 | `ocs new <mode>` | 创建一个空环境目录 |
 | `ocs remove <mode>` | 删除一个环境目录 |
+| `ocs run <mode> [..]` | 临时用指定环境启动一次 `opencode`（不持久化） |
 | `ocs version` | 打印版本号 |
 | `ocs help` | 显示帮助 |
 

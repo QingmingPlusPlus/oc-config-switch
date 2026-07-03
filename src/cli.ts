@@ -5,6 +5,7 @@ export type Command =
   | { type: 'list' }
   | { type: 'new'; mode: string }
   | { type: 'remove'; mode: string }
+  | { type: 'run'; mode: string; passthroughArgs: string[] }
   | { type: 'help' }
   | { type: 'version' };
 
@@ -38,6 +39,14 @@ export function parseCommand(args: string[]): Command {
     }
     return { type: command, mode };
   }
+  if (command === 'run') {
+    const mode = args[1];
+    if (mode === undefined) {
+      throw new Error('Missing mode. Usage: ocs run <mode> [opencode-args...]');
+    }
+    const passthroughArgs = args.slice(2);
+    return { type: 'run', mode, passthroughArgs };
+  }
   if (command.startsWith('-')) {
     throw new Error(`Unknown option: ${command}`);
   }
@@ -54,6 +63,7 @@ Usage:
   ocs list             List all environments ( (*) = active, ( ) = inactive )
   ocs new <mode>       Create an empty environment directory
   ocs remove <mode>    Remove an environment directory
+  ocs run <mode> [..]  Launch opencode with this environment for one session
   ocs version          Print version
   ocs help             Show this help message
 
@@ -65,7 +75,9 @@ Config file:           config.json next to the package root
 baseDir:               Supports absolute paths and ~/ paths
 Mode names:            Direct child folders under baseDir
 Effect:                macOS/Linux writes ~/.zshrc; Windows sets a user env var
-Apply changes:         Open a new terminal (or run source ~/.zshrc on macOS/Linux)`);
+Apply changes:         Open a new terminal (or run source ~/.zshrc on macOS/Linux)
+ocs run:               Launches opencode with OPENCODE_CONFIG_DIR set for this
+                       session only — non-persistent, no shell config changes`);
 }
 
 export function printVersion(): void {

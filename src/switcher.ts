@@ -1,4 +1,4 @@
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { basename, dirname, isAbsolute, join, relative, resolve } from 'node:path';
@@ -27,6 +27,13 @@ export type EnvironmentCurrentResult = {
   mode: string | null;
   configDir: string | null;
   updateTarget: string;
+};
+
+export type EnvironmentRunResult = {
+  mode: string;
+  configDir: string;
+  exitCode: number | null;
+  signal: NodeJS.Signals | null;
 };
 
 type SwitchOptions = {
@@ -132,6 +139,44 @@ export function removeMode(mode: string, options: SwitchOptions = {}): Environme
   assertExistingEnvironmentDir(configDir);
   rmSync(configDir, { recursive: true });
   return { mode, configDir };
+}
+
+export function runMode(
+  mode: string,
+  passthroughArgs: readonly string[] = [],
+  options: SwitchOptions = {},
+): EnvironmentRunResult {
+  const context = resolveSwitchContext(options);
+  const configDir = resolveModeDir(context.baseDir, mode);
+  assertExistingEnvironmentDir(configDir);
+
+  // Set OPENCODE_CONFIG_DIR for the opencode child process only. This is the
+  // "temporary" lever: the variable never touches ~/.zshrc or the Windows user
+  // environment, so it applies to this single invocation and nothing else.
+  const env = { ...process.env, OPENCODE_CONFIG_DIR: configDir };
+
+  // Windows needs shell:true so the launcher resolves the opencode shim
+  // (opencode.cmd / opencode.exe) via PATHEXT. macOS/Linux exec the binary on
+  // PATH directly with no shell, avoiding quoting pitfalls.
+  const result = spawnSync('opencode', passthroughArgs, {
+    env,
+    stdio: 'inherit',
+    shell: context.platform === 'win32',
+  });
+
+  if (result.error !== undefined) {
+    const message = result.error instanceof Error ? result.error.message : String(result.error);
+    throw new Error(
+      `Failed to launch opencode: ${message}. Is "opencode" installed and on your PATH?`,
+    );
+  }
+
+  return {
+    mode,
+    configDir,
+    exitCode: result.status,
+    signal: result.signal,
+  };
 }
 
 export function resolveProjectRoot(moduleUrl = import.meta.url): string {

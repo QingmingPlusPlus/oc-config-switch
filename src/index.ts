@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { parseCommand, printHelp, printVersion } from './cli.js';
-import { clearMode, createMode, currentMode, listModes, removeMode, switchMode } from './switcher.js';
+import { clearMode, createMode, currentMode, listModes, removeMode, runMode, switchMode } from './switcher.js';
 
 function main(args: string[]): void {
   const command = parseCommand(args);
@@ -68,6 +68,18 @@ function main(args: string[]): void {
       const result = removeMode(command.mode);
       console.log(`Removed mode: ${result.mode}`);
       console.log(`Directory: ${result.configDir}`);
+      break;
+    }
+    case 'run': {
+      const result = runMode(command.mode, command.passthroughArgs);
+      // opencode owns the terminal via inherited stdio, so no preamble here.
+      // Propagate the child's exit status so callers (and shells) see the
+      // real outcome. A signal-based termination is reported as a failure.
+      if (result.exitCode !== null) {
+        process.exitCode = result.exitCode;
+      } else if (result.signal !== null) {
+        process.exitCode = 1;
+      }
       break;
     }
   }

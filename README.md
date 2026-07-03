@@ -98,6 +98,18 @@ Remove an environment:
 ocs remove work
 ```
 
+Launch opencode with an environment for one session (non-persistent):
+
+```sh
+ocs run work
+```
+
+Extra arguments after the mode are forwarded to opencode:
+
+```sh
+ocs run work --resume
+```
+
 ## Commands
 
 | Command | Description |
@@ -108,6 +120,7 @@ ocs remove work
 | `ocs list` | List all environments under `baseDir` |
 | `ocs new <mode>` | Create an empty environment directory |
 | `ocs remove <mode>` | Remove an environment directory |
+| `ocs run <mode> [..]` | Launch `opencode` with the environment for one session (non-persistent) |
 | `ocs version` | Print the version |
 | `ocs help` | Show help |
 
